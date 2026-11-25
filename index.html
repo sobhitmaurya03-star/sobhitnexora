@@ -5,16 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>SOBHITNEXORA | AI, Technology & Education</title>
+  <title>SOBHITNEXORA | Learn, Grow & Succeed</title>
+  <meta name="description" content="SOBHITNEXORA - Education, learning resources, YouTube content and digital growth.">
+  <meta name="keywords" content="SOBHITNEXORA, Education, UP Board, Study, Sobhit Maurya">
 
-  <meta name="description" content="Welcome to SOBHITNEXORA. Explore AI, Technology, Education, digital learning and innovation with Sobhit Maurya.">
-
-  <meta name="keywords" content="SOBHITNEXORA, Sobhit Maurya, AI, Technology, Education">
-
-  <meta name="author" content="Sobhit Maurya">
-  <meta name="theme-color" content="#071326">
-
-  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="icon" type="image/png" href="logo.png">
 
   <style>
     * {
@@ -25,100 +20,106 @@
     }
 
     body {
+      background: #080808;
+      color: #ffffff;
       font-family: Arial, sans-serif;
-      background: #071326;
-      color: white;
       line-height: 1.6;
     }
 
+    :root {
+      --gold: #d6ad55;
+      --black: #080808;
+      --light: #cfcfcf;
+    }
+
     header {
+      background: #101010;
+      border-bottom: 1px solid #3a2c12;
+      padding: 14px 7%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 7%;
-      background: #0c1b32;
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid #203b5c;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 22px;
+      color: var(--gold);
+      font-size: 21px;
       font-weight: bold;
-      color: #ffc928;
     }
 
     .brand img {
-      width: 45px;
-      height: 45px;
+      width: 43px;
+      height: 43px;
       object-fit: contain;
       border-radius: 50%;
+    }
+
+    nav {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
     }
 
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 20px;
       font-size: 14px;
     }
 
     nav a:hover {
-      color: #ffc928;
+      color: var(--gold);
     }
 
     .hero {
-      min-height: 600px;
+      min-height: 570px;
+      padding: 90px 8%;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-around;
-      gap: 30px;
-      padding: 65px 8%;
-      background: radial-gradient(circle at top right, #123e72, #071326 65%);
-    }
-
-    .hero-text {
-      max-width: 580px;
-    }
-
-    .hero-text h1 {
-      font-size: 52px;
-      line-height: 1.2;
-      margin-bottom: 20px;
-    }
-
-    .gold {
-      color: #ffc928;
-    }
-
-    .hero-text p {
-      color: #c5d3e5;
-      font-size: 17px;
-      margin-bottom: 25px;
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle at top, #30230e, #080808 65%);
     }
 
     .hero img {
-      width: 290px;
-      max-width: 100%;
-      filter: drop-shadow(0 0 25px #1678c9);
+      width: 115px;
+      height: 115px;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      color: var(--gold);
+      font-size: clamp(32px, 6vw, 55px);
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      color: var(--light);
+      max-width: 650px;
+      margin: 18px auto;
+      font-size: 17px;
     }
 
     .btn {
       display: inline-block;
-      padding: 13px 25px;
-      background: #ffc928;
-      color: #071326;
-      font-weight: bold;
+      padding: 12px 25px;
+      margin: 8px;
+      background: var(--gold);
+      color: #090909;
       text-decoration: none;
-      border-radius: 30px;
-      margin: 7px 5px 7px 0;
+      font-weight: bold;
+      border-radius: 6px;
     }
 
     .btn:hover {
-      background: white;
+      background: #f0d28b;
     }
 
     section {
@@ -127,100 +128,123 @@
     }
 
     .section-title {
-      font-size: 34px;
-      color: #ffc928;
-      margin-bottom: 20px;
+      color: var(--gold);
+      font-size: 32px;
+      margin-bottom: 12px;
     }
 
-    .about {
-      background: #0c1b32;
-    }
-
-    .about p {
-      max-width: 750px;
-      margin: auto;
-      color: #c5d3e5;
-      font-size: 17px;
+    .section-subtitle {
+      color: var(--light);
+      margin-bottom: 35px;
     }
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 22px;
-      margin-top: 35px;
+      margin-top: 30px;
     }
 
     .card {
-      background: #102744;
-      padding: 30px 20px;
-      border: 1px solid #23466d;
-      border-radius: 15px;
+      background: #151515;
+      border: 1px solid #3d3018;
+      border-radius: 12px;
+      padding: 28px 20px;
       transition: 0.3s;
     }
 
     .card:hover {
-      transform: translateY(-7px);
-      border-color: #ffc928;
+      transform: translateY(-6px);
+      border-color: var(--gold);
     }
 
     .card h3 {
-      color: #ffc928;
+      color: var(--gold);
       margin-bottom: 12px;
     }
 
     .card p {
-      color: #c5d3e5;
+      color: var(--light);
+      font-size: 15px;
+    }
+
+    .about {
+      background: #101010;
+    }
+
+    .about-content {
+      max-width: 750px;
+      margin: auto;
+      color: var(--light);
+      font-size: 16px;
+    }
+
+    .founder-box {
+      max-width: 700px;
+      margin: auto;
+      background: #151515;
+      border: 1px solid #4a3819;
+      border-radius: 15px;
+      padding: 30px;
+    }
+
+    .founder-box img {
+      width: 175px;
+      height: 175px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .founder-box h3 {
+      color: var(--gold);
+      font-size: 25px;
+    }
+
+    .founder-box p {
+      color: var(--light);
+      margin-top: 8px;
     }
 
     .contact {
-      background: #0c1b32;
+      background: #101010;
     }
 
     footer {
+      background: #050505;
+      border-top: 1px solid #3d3018;
       text-align: center;
-      padding: 25px;
-      color: #b8c6d8;
-      background: #050d19;
-      border-top: 1px solid #203b5c;
+      padding: 25px 10px;
+      color: #aaa;
+      font-size: 14px;
     }
 
-    @media(max-width: 750px) {
+    footer span {
+      color: var(--gold);
+    }
+
+    @media (max-width: 650px) {
       header {
         flex-direction: column;
         gap: 12px;
       }
 
       nav {
-        display: flex;
-        flex-wrap: wrap;
         justify-content: center;
-        gap: 12px;
+        gap: 14px;
       }
 
       nav a {
-        margin: 0;
-      }
-
-      .hero {
-        flex-direction: column-reverse;
-        text-align: center;
-        padding: 50px 6%;
-      }
-
-      .hero-text h1 {
-        font-size: 36px;
-      }
-
-      .hero img {
-        width: 220px;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
+        font-size: 13px;
       }
 
       section {
         padding: 55px 6%;
+      }
+
+      .hero {
+        min-height: 480px;
       }
     }
   </style>
@@ -228,108 +252,132 @@
 
 <body>
 
-<header>
-  <div class="brand">
+  <header>
+    <div class="brand">
+      <img src="logo.png" alt="SOBHITNEXORA Logo">
+      SOBHITNEXORA
+    </div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#education">Education</a>
+      <a href="#youtube">YouTube</a>
+      <a href="#about">About</a>
+      <a href="#founder">Founder</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
     <img src="logo.png" alt="SOBHITNEXORA Logo">
-    SOBHITNEXORA
-  </div>
 
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#services">Explore</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
-
-<main>
-
-<section class="hero" id="home">
-  <div class="hero-text">
-    <h1>
-      Welcome to <span class="gold">SOBHITNEXORA</span>
-    </h1>
+    <h1>SOBHITNEXORA</h1>
 
     <p>
-      Learn Today, Lead Tomorrow.
-      Explore Artificial Intelligence, Technology,
-      Education and Innovation with Sobhit Maurya.
+      Welcome to SOBHITNEXORA.
+      A platform for education, knowledge, creativity
+      and digital growth.
     </p>
 
-    <a class="btn" href="#about">Explore More</a>
+    <a class="btn" href="#education">Explore More</a>
+    <a class="btn" href="https://youtube.com/@sobhitnexora"
+       target="_blank" rel="noopener noreferrer">Visit YouTube</a>
+  </section>
+
+  <section id="education">
+    <h2 class="section-title">Education</h2>
+    <p class="section-subtitle">
+      Learn better. Prepare smarter. Achieve more.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>UP Board Preparation</h3>
+        <p>Study support and exam preparation resources for students.</p>
+      </div>
+
+      <div class="card">
+        <h3>Important Questions</h3>
+        <p>Important topics and revision support for better learning.</p>
+      </div>
+
+      <div class="card">
+        <h3>Study Materials</h3>
+        <p>Helpful educational content to support your studies.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="youtube">
+    <h2 class="section-title">Our YouTube Channel</h2>
+    <p class="section-subtitle">
+      Watch educational videos and stay connected with us.
+    </p>
+
+    <div class="card">
+      <h3>SOBHITNEXORA</h3>
+      <p>Educational videos, exam preparation and learning content.</p>
+
+      <a class="btn"
+         href="https://youtube.com/@sobhitnexora"
+         target="_blank" rel="noopener noreferrer">
+        Subscribe on YouTube
+      </a>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <h2 class="section-title">About SOBHITNEXORA</h2>
+
+    <div class="about-content">
+      <p>
+        SOBHITNEXORA is a growing digital platform focused on
+        education, creativity, knowledge and new opportunities.
+      </p>
+
+      <p style="margin-top:15px">
+        Our goal is to make learning simple, useful and accessible
+        through digital content and educational resources.
+      </p>
+    </div>
+  </section>
+
+  <section id="founder">
+    <h2 class="section-title">Meet The Founder</h2>
+    <p class="section-subtitle">
+      The person behind SOBHITNEXORA
+    </p>
+
+    <div class="founder-box">
+      <img src="sobhit.png" alt="Sobhit Maurya - Founder">
+
+      <h3>Sobhit Maurya</h3>
+      <p>Founder of SOBHITNEXORA</p>
+
+      <p>
+        Building a platform focused on learning,
+        creativity and digital growth.
+      </p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <p class="section-subtitle">
+      Connect with SOBHITNEXORA through our YouTube channel.
+    </p>
 
     <a class="btn"
        href="https://youtube.com/@sobhitnexora"
-       target="_blank" rel="noopener">
-       Visit YouTube
+       target="_blank" rel="noopener noreferrer">
+      Connect With Us
     </a>
-  </div>
+  </section>
 
-  <img src="sobhit.png" alt="Sobhit Maurya">
-</section>
-
-<section class="about" id="about">
-  <h2 class="section-title">About Sobhit</h2>
-
-  <p>
-    Hello! I am Sobhit Maurya, the founder of
-    SOBHITNEXORA. My mission is to make learning
-    easier and help people explore the world of
-    Artificial Intelligence, Technology and Education.
-    Learn new skills, discover new ideas and grow
-    with innovation.
-  </p>
-</section>
-
-<section id="services">
-  <h2 class="section-title">Explore Our World</h2>
-
-  <div class="cards">
-
-    <div class="card">
-      <h3>Artificial Intelligence</h3>
-      <p>Discover AI tools, smart technology and new innovations.</p>
-    </div>
-
-    <div class="card">
-      <h3>Technology</h3>
-      <p>Explore digital technology, useful tools and tech knowledge.</p>
-    </div>
-
-    <div class="card">
-      <h3>Education</h3>
-      <p>Learn new concepts, improve your knowledge and prepare for success.</p>
-    </div>
-
-  </div>
-</section>
-
-<section class="contact" id="contact">
-  <h2 class="section-title">Connect With Us</h2>
-
-  <p>
-    Stay connected with SOBHITNEXORA
-    for learning, technology and innovation.
-  </p>
-
-  <a class="btn"
-     href="https://youtube.com/@sobhitnexora"
-     target="_blank" rel="noopener">
-     Subscribe on YouTube
-  </a>
-</section>
-
-</main>
-
-<footer>
-  <p>© 2026 SOBHITNEXORA | Founded by Sobhit Maurya</p>
-  <p>Learn Today • Lead Tomorrow</p>
-</footer>
+  <footer>
+    <p>© 2026 <span>SOBHITNEXORA</span>. All Rights Reserved.</p>
+    <p>Learn • Create • Grow</p>
+  </footer>
 
 </body>
 </html>
-<!-- Founder Photo -->
-<img src="sobhit.png" alt="Sobhit Maurya">
-
-<!-- Website Logo -->
-<img src="logo.png" alt="SOBHITNEXORA Logo">
