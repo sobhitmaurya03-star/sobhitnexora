@@ -30,6 +30,8 @@ section{padding:76px 0}.section-head{margin-bottom:30px}.kicker{color:var(--gold
 .cta{border:1px solid #5c4825;border-radius:18px;padding:35px;background:radial-gradient(ellipse at right,#49351655,transparent 55%),#111}
 .cta h2{font-size:32px;margin:0 0 8px}.cta p{color:var(--muted)}
 footer{padding:28px 0;border-top:1px solid var(--line);color:#999;font-size:13px}.foot{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.notice{width:min(1120px,92%);margin:18px auto;padding:14px 18px;border:1px solid var(--gold);border-radius:10px;background:#171207;color:var(--gold2)}
+[hidden]{display:none!important}
 @media(max-width:760px){.links{display:none;position:absolute;top:70px;left:0;right:0;background:#0b0b0b;padding:18px 4%;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--line)}.links.open{display:flex}.menu{display:block}.hero{padding:75px 0}.grid{grid-template-columns:1fr}.about{grid-template-columns:1fr}section{padding:58px 0}}
 </style>
 </head>
@@ -41,21 +43,22 @@ footer{padding:28px 0;border-top:1px solid var(--line);color:#999;font-size:13px
 <a href="#home">Home</a><a href="#education">Education</a><a href="#youtube">YouTube</a><a href="#about">About</a><a href="#contact">Contact</a>
 </div></nav></div></header>
 <main>
+<div id="noticeBox" class="notice" hidden><strong>NOTICE:</strong> <span id="noticeText"></span></div>
 <section class="hero" id="home"><div class="wrap">
 <div class="eyebrow">Learn • Create • Grow</div>
-<h1>Welcome to<br><em>SOBHITNEXORA</em></h1>
+<h1 id="heroTitle">Welcome to<br><em>SOBHITNEXORA</em></h1>
 <p class="lead">A place for learning, useful educational resources, digital creativity and new opportunities. Learn something new and move forward with confidence.</p>
-<div class="actions"><a class="btn primary" href="#education">Explore Education</a><a class="btn outline" href="https://youtube.com/@sobhitnexora" target="_blank" rel="noopener">Visit YouTube ↗</a></div>
+<div class="actions"><a class="btn primary" href="#education">Explore Education</a><a class="btn outline youtubeLink" href="https://youtube.com/@sobhitnexora" target="_blank" rel="noopener">Visit YouTube ↗</a></div>
 </div></section>
 <section id="education"><div class="wrap">
 <div class="section-head"><div class="kicker">LEARN WITH US</div><h2>Education Hub</h2><p>Study support and learning resources for students. New notes, practice material and updates can be added here.</p></div>
 <div class="grid">
 <article class="card"><div class="symbol">📘</div><h3>UP Board Preparation</h3><p>Revision support, important topics and exam preparation resources for students.</p><a href="#contact">Explore resources →</a></article>
-<article class="card"><div class="symbol">📝</div><h3>Notes & PDFs</h3><p>Organized study notes and downloadable learning material in one place.</p><a href="#contact">View study material →</a></article>
+<article class="card"><div class="symbol">📝</div><h3 id="resourceTitle">Notes & PDFs</h3><p>Organized study notes and downloadable learning material in one place.</p><a id="resourceLink" href="#contact" target="_blank" rel="noopener">View study material →</a></article>
 <article class="card"><div class="symbol">🎯</div><h3>Practice & Revision</h3><p>Helpful questions and topic-wise revision to strengthen your preparation.</p><a href="#youtube">Start learning →</a></article>
 </div></div></section>
 <section class="band" id="youtube"><div class="wrap about">
-<div><div class="kicker">WATCH • LEARN • REPEAT</div><h2>Learn on YouTube</h2><p style="color:#aaa">Watch educational videos, revision sessions and helpful updates on the SOBHITNEXORA channel.</p><div class="actions"><a class="btn primary" href="https://youtube.com/@sobhitnexora" target="_blank" rel="noopener">Open YouTube Channel ↗</a></div></div>
+<div><div class="kicker">WATCH • LEARN • REPEAT</div><h2>Learn on YouTube</h2><p style="color:#aaa">Watch educational videos, revision sessions and helpful updates on the SOBHITNEXORA channel.</p><div class="actions"><a class="btn primary youtubeLink" href="https://youtube.com/@sobhitnexora" target="_blank" rel="noopener">Open YouTube Channel ↗</a></div></div>
 <div class="founder-box"><div class="symbol">▶️</div><small>OUR VIDEO COMMUNITY</small><h3>SOBHITNEXORA</h3><p style="color:#aaa">Education • Exam Preparation • Learning</p></div>
 </div></section>
 <section id="about"><div class="wrap about">
@@ -64,9 +67,89 @@ footer{padding:28px 0;border-top:1px solid var(--line);color:#999;font-size:13px
 </div></section>
 <section class="band" id="contact"><div class="wrap"><div class="cta">
 <div class="kicker">LET'S CONNECT</div><h2>Stay connected with us.</h2><p>For collaborations, questions or suggestions, reach out through the channel below.</p>
-<div class="actions"><a class="btn primary" href="https://youtube.com/@sobhitnexora" target="_blank" rel="noopener">YouTube Channel ↗</a><a class="btn outline" href="mailto:hello@sobhitnexora.example">Email link (update this)</a></div>
+<div class="actions"><a class="btn primary youtubeLink" href="https://youtube.com/@sobhitnexora" target="_blank" rel="noopener">YouTube Channel ↗</a><a class="btn outline" href="mailto:hello@sobhitnexora.example">Email link (update this)</a></div>
 </div></div></section>
 </main>
 <footer><div class="wrap foot"><span>© <span id="year"></span> SOBHITNEXORA. All rights reserved.</span><span>Built for learning and growth.</span></div></footer>
 <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBG2VMfO8EBBne1gVxROnG93_4mXH3ueTw",
+  authDomain: "sobhitnexora.firebaseapp.com",
+  databaseURL: "https://sobhitnexora-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sobhitnexora",
+  storageBucket: "sobhitnexora.firebasestorage.app",
+  messagingSenderId: "34041231979",
+  appId: "1:34041231979:web:6aef65c37f29377bde8f2e",
+  measurementId: "G-K99QGY1VFN"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+function safeHttpsUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
+function safeYoutubeUrl(value) {
+  const safeUrl = safeHttpsUrl(value);
+  if (!safeUrl) return "";
+  const host = new URL(safeUrl).hostname.toLowerCase();
+  return ["youtube.com", "www.youtube.com", "m.youtube.com", "youtu.be", "www.youtu.be"].includes(host)
+    ? safeUrl : "";
+}
+
+onValue(ref(db, "siteContent"), (snapshot) => {
+  if (!snapshot.exists()) return;
+  const data = snapshot.val() || {};
+
+  // Update the hero title without allowing HTML from the admin panel.
+  const title = typeof data.title === "string" ? data.title.trim() : "";
+  if (title) {
+    const titleElement = document.getElementById("heroTitle");
+    titleElement.textContent = title;
+    titleElement.style.whiteSpace = "pre-line";
+  }
+
+  // Show or hide the announcement.
+  const notice = typeof data.notice === "string" ? data.notice.trim() : "";
+  document.getElementById("noticeText").textContent = notice;
+  document.getElementById("noticeBox").hidden = !notice;
+
+  // Update all YouTube buttons only for valid YouTube URLs.
+  const youtubeUrl = safeYoutubeUrl(data.youtubeUrl || "");
+  if (youtubeUrl) {
+    document.querySelectorAll(".youtubeLink").forEach(link => {
+      link.href = youtubeUrl;
+    });
+  }
+
+  // Update the Notes & PDFs card link and title.
+  const resourceTitle = typeof data.resourceTitle === "string" ? data.resourceTitle.trim() : "";
+  const resourceUrl = safeHttpsUrl(data.resourceUrl || "");
+  const resourceLink = document.getElementById("resourceLink");
+
+  if (resourceTitle) {
+    document.getElementById("resourceTitle").textContent = resourceTitle;
+  }
+  if (resourceUrl) {
+    resourceLink.href = resourceUrl;
+    resourceLink.target = "_blank";
+    resourceLink.rel = "noopener";
+  } else {
+    resourceLink.href = "#contact";
+    resourceLink.removeAttribute("target");
+  }
+}, (error) => {
+  console.error("Firebase content read failed:", error);
+});
+</script>
 </body></html>
