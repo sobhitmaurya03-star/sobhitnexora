@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOBHITNEXORA | Admin Dashboard</title>
+<style>
+:root{--gold:#d6b15e;--bg:#090909;--panel:#151515;--line:#333;--muted:#aaa}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f5f5f5;font-family:Arial,sans-serif}
+.wrap{max-width:900px;margin:28px auto;padding:16px}
+header{border-bottom:1px solid var(--line);padding:8px 0 18px;margin-bottom:22px}
+h1{margin:0;color:var(--gold);font-size:26px}header p{color:var(--muted);margin:8px 0 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;margin:16px 0}
+h2{font-size:19px;margin:0 0 16px;color:var(--gold)}
+label{display:block;margin:14px 0 7px;color:#ddd;font-size:14px}
+input,textarea{width:100%;padding:12px;border:1px solid #444;border-radius:9px;background:#080808;color:#fff;font-size:15px}
+textarea{min-height:100px;resize:vertical}
+button{border:0;border-radius:9px;padding:12px 17px;background:var(--gold);color:#111;font-weight:bold;font-size:15px;margin:12px 8px 0 0;cursor:pointer}
+button.secondary{background:#333;color:#fff}button.danger{background:#7d2929;color:#fff}
+.status{color:#bfe7bd;min-height:22px;margin-top:10px}.error{color:#ff9b9b}
+.hidden{display:none}.small{font-size:13px;color:var(--muted);line-height:1.5}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:600px){.wrap{margin:8px auto;padding:12px}.card{padding:15px}h1{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="top"><h1>SOBHITNEXORA</h1><span class="small">ADMIN PANEL</span></div>
+  <p>Website content management</p>
+</header>
+
+<section id="loginCard" class="card">
+  <h2>Admin Login</h2>
+  <label for="email">Admin Email</label><input id="email" type="email" autocomplete="username" placeholder="अपना Firebase email लिखें">
+  <label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="अपना password लिखें">
+  <button id="loginBtn">Login</button>
+  <div id="loginStatus" class="status" aria-live="polite"></div>
+  <p class="small">केवल अधिकृत Admin UID को प्रवेश मिलेगा। अपना पासवर्ड किसी के साथ साझा न करें।</p>
+</section>
+
+<section id="dashboard" class="hidden">
+  <div class="card">
+    <div class="top"><h2>Dashboard</h2><button id="logoutBtn" class="secondary">Logout</button></div>
+    <div id="welcome" class="small"></div>
+  </div>
+  <div class="card">
+    <h2>Website Content</h2>
+    <label for="siteTitle">Featured Title</label><input id="siteTitle" maxlength="100" placeholder="उदाहरण: UP Board 2027 तैयारी">
+    <label for="siteNotice">Announcement / Notice</label><textarea id="siteNotice" maxlength="1500" placeholder="वेबसाइट पर दिखाने के लिए सूचना लिखें"></textarea>
+    <label for="youtubeUrl">YouTube Video / Channel URL</label><input id="youtubeUrl" type="url" placeholder="https://youtube.com/...">
+    <label for="resourceTitle">Study Material Title</label><input id="resourceTitle" maxlength="120" placeholder="उदाहरण: Business Statistics Notes">
+    <label for="resourceUrl">PDF / Study Material URL</label><input id="resourceUrl" type="url" placeholder="https://...">
+    <button id="saveBtn">Save Website Content</button>
+    <div id="saveStatus" class="status" aria-live="polite"></div>
+    <p class="small">यह जानकारी Firebase में <b>siteContent</b> नाम से सेव होगी। मौजूदा वेबसाइट पर इसे दिखाने के लिए index.html में Firebase से content पढ़ने का कोड भी जोड़ना होगा।</p>
+  </div>
+</section>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBG2VMfO8EBBne1gVxROnG93_4mXH3ueTw",
+  authDomain: "sobhitnexora.firebaseapp.com",
+  databaseURL: "https://sobhitnexora-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sobhitnexora",
+  storageBucket: "sobhitnexora.firebasestorage.app",
+  messagingSenderId: "34041231979",
+  appId: "1:34041231979:web:6aef65c37f29377bde8f2e",
+  measurementId: "G-K99QGY1VFN"
+};
+
+// Admin UID is checked in the page AND enforced by Firebase Database Rules.
+const ADMIN_UID = "eFW0qq05CDXMAVcz0MRrBviQsa73";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const $ = (id) => document.getElementById(id);
+const loginCard = $("loginCard");
+const dashboard = $("dashboard");
+const loginStatus = $("loginStatus");
+const saveStatus = $("saveStatus");
+
+$("loginBtn").addEventListener("click", async () => {
+  loginStatus.textContent = "Login हो रहा है...";
+  loginStatus.className = "status";
+  try {
+    await signInWithEmailAndPassword(auth, $("email").value.trim(), $("password").value);
+  } catch (e) {
+    loginStatus.textContent = "Login नहीं हुआ: " + e.message;
+    loginStatus.className = "status error";
+  }
+});
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    loginCard.classList.remove("hidden");
+    dashboard.classList.add("hidden");
+    return;
+  }
+  if (user.uid !== ADMIN_UID) {
+    await signOut(auth);
+    loginStatus.textContent = "इस अकाउंट को Admin अनुमति नहीं है।";
+    loginStatus.className = "status error";
+    return;
+  }
+  loginCard.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+  $("welcome").textContent = "Logged in: " + (user.email || "Admin");
+  try {
+    const snap = await get(ref(db, "siteContent"));
+    if (snap.exists()) {
+      const data = snap.val();
+      $("siteTitle").value = data.title || "";
+      $("siteNotice").value = data.notice || "";
+      $("youtubeUrl").value = data.youtubeUrl || "";
+      $("resourceTitle").value = data.resourceTitle || "";
+      $("resourceUrl").value = data.resourceUrl || "";
+    }
+  } catch (e) {
+    saveStatus.textContent = "Content लोड नहीं हुआ: " + e.message;
+    saveStatus.className = "status error";
+  }
+});
+
+$("saveBtn").addEventListener("click", async () => {
+  const youtubeUrl = $("youtubeUrl").value.trim();
+  const resourceUrl = $("resourceUrl").value.trim();
+  if (youtubeUrl && !/^https:\/\/(www\.)?(youtube\.com|youtu\.be)\//i.test(youtubeUrl)) {
+    saveStatus.textContent = "YouTube URL सही https://youtube.com या https://youtu.be लिंक होना चाहिए।";
+    saveStatus.className = "status error"; return;
+  }
+  if (resourceUrl && !/^https:\/\//i.test(resourceUrl)) {
+    saveStatus.textContent = "Study material URL https:// से शुरू होना चाहिए।";
+    saveStatus.className = "status error"; return;
+  }
+  saveStatus.textContent = "Save हो रहा है...";
+  saveStatus.className = "status";
+  try {
+    if (!auth.currentUser || auth.currentUser.uid !== ADMIN_UID) throw new Error("Admin login आवश्यक है।");
+    await set(ref(db, "siteContent"), {
+      title: $("siteTitle").value.trim(),
+      notice: $("siteNotice").value.trim(),
+      youtubeUrl,
+      resourceTitle: $("resourceTitle").value.trim(),
+      resourceUrl,
+      updatedAt: new Date().toISOString()
+    });
+    saveStatus.textContent = "सफलतापूर्वक Firebase में सेव हो गया!";
+    saveStatus.className = "status";
+  } catch (e) {
+    saveStatus.textContent = "Save नहीं हुआ: " + e.message;
+    saveStatus.className = "status error";
+  }
+});
+
+$("logoutBtn").addEventListener("click", () => signOut(auth));
+</script>
+</body>
+</html>
